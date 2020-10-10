@@ -84,7 +84,7 @@ class _ArticleDataState extends State<ArticleData> {
                     data: """${snapshot.data.docs[widget.index]['htmlData']}""",
                     onLinkTap: (url) {
                       print(url);
-                      launch(url);
+                      launch(url,forceWebView: true);
                     },
                   );
                 })
