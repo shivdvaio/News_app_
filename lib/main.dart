@@ -3,9 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:news_app/Screens/articleData.dart';
 import 'constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   var db = FirebaseFirestore.instance.collection('articleData').snapshots();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       home: SafeArea(
@@ -54,14 +56,26 @@ class _MyAppState extends State<MyApp> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.only(top: 6),
-                                      child: Container(
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              "${snapshot.data.docs[index].data()['imageAddress']}",
-                                          placeholder: (context, url) =>
-                                              CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Get.to(ArticleData(index: index));
+                                          // Navigator.push(context,
+                                          //     MaterialPageRoute(builder:
+                                          //         (BuildContext context) {
+                                          //   print(index);
+                                          //   return ArticleData(index: index);
+                                          // }));
+                                        },
+                                        child: Container(
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                "${snapshot.data.docs[index].data()['imageAddress']}",
+                                            placeholder: (context, url) =>
+                                                CircularProgressIndicator(),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                          ),
                                         ),
                                       ),
                                     ),
