@@ -5,6 +5,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:news_app/main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ArticleData extends StatefulWidget {
   final index;
@@ -81,8 +82,9 @@ class _ArticleDataState extends State<ArticleData> {
                   }
                   return Html(
                     data: """${snapshot.data.docs[widget.index]['htmlData']}""",
-                    onLinkTap: (url){
-                       WebView(initialUrl: url,);
+                    onLinkTap: (url) {
+                      print(url);
+                      launch(url);
                     },
                   );
                 })

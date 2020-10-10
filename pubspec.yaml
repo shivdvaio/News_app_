@@ -31,8 +31,10 @@ dependencies:
   firebase_core: ^0.5.0+1
   flutter_html: ^1.0.2
   flutter_image_compress: ^0.7.0
-  webview_flutter: 1.0.1
   get: ^3.13.2
+  url_launcher: ^5.7.2
+  webview_flutter: ^0.3.22+1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
