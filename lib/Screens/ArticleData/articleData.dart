@@ -3,13 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-import 'package:news_app/main.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class ArticleData extends StatefulWidget {
+  ArticleData({Key key, this.index}) : super(key: key);
   final index;
-  ArticleData({this.index});
+
   @override
   _ArticleDataState createState() => _ArticleDataState();
 }
@@ -17,7 +17,6 @@ class ArticleData extends StatefulWidget {
 class _ArticleDataState extends State<ArticleData> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print(widget.index);
   }
@@ -28,11 +27,7 @@ class _ArticleDataState extends State<ArticleData> {
       appBar: AppBar(
           leading: InkWell(
             onTap: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (BuildContext context) {
-              //   return MyApp();
-              // }));
-              Navigator.of(context).pop();
+              Get.back();
             },
             child: Icon(
               Icons.arrow_back_ios,
@@ -83,8 +78,8 @@ class _ArticleDataState extends State<ArticleData> {
                   return Html(
                     data: """${snapshot.data.docs[widget.index]['htmlData']}""",
                     onLinkTap: (url) {
-                      print(url);
-                      launch(url,forceWebView: true);
+                      
+                      launch(url, forceWebView: true);
                     },
                   );
                 })

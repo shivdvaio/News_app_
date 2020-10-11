@@ -33,6 +33,7 @@ dependencies:
   flutter_image_compress: ^0.7.0
   get: ^3.13.2
   url_launcher: ^5.7.2
+  custom_bottom_navigation_bar: 0.0.1
   
 
 dev_dependencies:

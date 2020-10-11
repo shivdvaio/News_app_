@@ -1,13 +1,18 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar.dart';
+import 'package:custom_bottom_navigation_bar/custom_bottom_navigation_bar_item.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:news_app/Screens/articleData.dart';
-import 'constant.dart';
+import 'package:news_app/GetxControllers/controllers.dart';
+import 'package:news_app/Screens/Explore/explore.dart';
+import 'package:news_app/Screens/HomeScreen/homeScreen.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:async';
+
 import 'package:get/get.dart';
+
+import 'package:news_app/Screens/Saved/saved.dart';
+import 'package:news_app/Screens/Settings/setting.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +29,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var db = FirebaseFirestore.instance.collection('articleData').snapshots();
+
+  PageController _pageController = PageController();
+  Controller controller = Get.put(Controller());
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -31,75 +40,50 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: SafeArea(
         child: Scaffold(
-            body: StreamBuilder(
-                stream: db,
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  return snapshot.hasData
-                      ? CustomScrollView(
-                          slivers: [
-                            SliverGrid(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisSpacing: 20, crossAxisCount: 2),
-                              delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, index) {
-                                if (snapshot.data.docs[index].data()['title'] ==
-                                    null) {
-                                  return CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                  );
-                                }
-
-                                return Stack(
-                                  alignment: Alignment.topRight,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 6),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.to(ArticleData(index: index));
-                                          // Navigator.push(context,
-                                          //     MaterialPageRoute(builder:
-                                          //         (BuildContext context) {
-                                          //   print(index);
-                                          //   return ArticleData(index: index);
-                                          // }));
-                                        },
-                                        child: Container(
-                                          child: CachedNetworkImage(
-                                            imageUrl:
-                                                "${snapshot.data.docs[index].data()['imageAddress']}",
-                                            placeholder: (context, url) =>
-                                                CircularProgressIndicator(),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Icon(Icons.error),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.favorite_border_sharp,
-                                      color: Colors.white,
-                                      size: 40,
-                                    ),
-                                    Positioned(
-                                        left: 20,
-                                        height: 40,
-                                        bottom: 0,
-                                        child: Text(
-                                          "${snapshot.data.docs[index]['title']}",
-                                          style: TextStyle(fontSize: 20),
-                                        )),
-                                  ],
-                                );
-                              }, childCount: snapshot.data.docs.length),
-                            )
-                          ],
-                        )
-                      : Center(child: CircularProgressIndicator());
-                })),
+            bottomNavigationBar: CustomBottomNavigationBar(
+              backgroundColor: Colors.black12,
+              onTap: (index) {
+                _pageController.animateToPage(index,
+                    curve: Curves.easeInOutCubic,
+                    duration: Duration(milliseconds: 600));
+              },
+              items: [
+                CustomBottomNavigationBarItem(
+                  icon: Icons.home_filled,
+                  title: "Home",
+                ),
+                CustomBottomNavigationBarItem(
+                  icon: Icons.search,
+                  title: "Explore",
+                ),
+                CustomBottomNavigationBarItem(
+                  icon: Icons.save_rounded,
+                  title: "Saved",
+                ),
+                CustomBottomNavigationBarItem(
+                  icon: Icons.settings,
+                  title: "Settings",
+                ),
+              ],
+            ),
+            appBar: AppBar(
+                title: GetBuilder<Controller>(
+                    init: Controller(),
+                    builder: (controller) {
+                      return Text("${controller.appTitle}");
+                    })),
+            body: PageView(
+              onPageChanged: (index) {
+                controller.changeTitle(index: index);
+              },
+              controller: _pageController,
+              children: [
+                HomeScreen(db: db),
+                Explore(),
+                SavedArticles(),
+                AppSettings()
+              ],
+            )),
       ),
     );
   }
