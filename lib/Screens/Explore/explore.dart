@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/GetxControllers/controllers.dart';
+import 'package:news_app/GetxControllers/firebaseController.dart';
 import 'package:news_app/Screens/ArticleData/articleData.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +14,7 @@ class Explore extends StatefulWidget {
 Controller controller = Get.put(Controller());
 class _ExploreState extends State<Explore> {
   var db = FirebaseFirestore.instance.collection('articleData').snapshots();
-  
+    FirebaseController firebaseController = Get.put(FirebaseController());
 
   var dq = FirebaseFirestore.instance.settings.persistenceEnabled;
 
@@ -61,9 +62,13 @@ class _ExploreState extends State<Explore> {
                           ),
                         ),
                         InkWell(
-                          onDoubleTap: () {},
+                          onDoubleTap: () {
+                             firebaseController.addFavouriteArticlesTofirebase(
+                                  snapshot: snapshot, index: index);
+                              Get.snackbar('Article', 'Added');
+                          },
                           child: Icon(
-                            Icons.favorite,
+                            Icons.favorite_border_sharp,
                             color: Colors.white,
                             size: 40,
                           ),
