@@ -3,17 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:news_app/GetxControllers/controllers.dart';
+import 'package:news_app/GetxControllers/firebaseController.dart';
 import 'package:news_app/Screens/ArticleData/articleData.dart';
+import 'package:news_app/Screens/Explore/explore.dart';
+import 'package:news_app/Services/searchServices.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   Controller controller = Get.put(Controller());
 
-  HomeScreen({
-    Key key,
-    @required this.db,
-  }) : super(key: key);
+  FirebaseController firebaseController = Get.put(FirebaseController());
 
-  final Stream<QuerySnapshot> db;
+  var db = FirebaseFirestore.instance.collection('articleData').snapshots();
+
+  void addProductdataTofireBase({Map mapdata}) {
+// ignore: deprecated_member_use
+    CollectionReference collectionReference =
+        // ignore: deprecated_member_use
+        Firestore.instance.collection('savedArticles');
+
+    collectionReference.add(mapdata).catchError((e) {
+      print(e.toString());
+    });
+    print("Product Information Added");
+  }
+
   bool btnCOLOR = true;
   @override
   Widget build(BuildContext context) {
@@ -57,12 +71,12 @@ class HomeScreen extends StatelessWidget {
                           ),
                           InkWell(
                             onDoubleTap: () {
-                              
+                              firebaseController.addFavouriteArticlesTofirebase(
+                                  snapshot: snapshot, index: index);
+                              Get.snackbar('Article', 'Added');
                             },
                             child: Icon(
-                              Icons.favorite,
-                              color:Colors.white,
-                                  
+                              Icons.favorite_border_sharp,
                               size: 40,
                             ),
                           ),

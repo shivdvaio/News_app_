@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.1"
+  bottom_navy_bar:
+    dependency: "direct main"
+    description:
+      name: bottom_navy_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.5.0"
   cached_network_image:
     dependency: "direct main"
     description:
@@ -120,13 +127,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.3"
-  custom_bottom_navigation_bar:
-    dependency: "direct main"
-    description:
-      name: custom_bottom_navigation_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   fake_async:
     dependency: transitive
     description:
