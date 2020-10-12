@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
                   BottomNavyBarItem(
                       inactiveColor: Colors.white,
                       activeColor: Colors.blue,
-                      title: Text('Saved'),
+                      title: Text('Favourites'),
                       icon: Icon(Icons.save_rounded)),
                   BottomNavyBarItem(
                       inactiveColor: Colors.white,
