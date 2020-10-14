@@ -46,47 +46,56 @@ class HomeScreen extends StatelessWidget {
                         );
                       }
 
-                      return Stack(
-                        alignment: Alignment.topRight,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 6),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.to(ArticleData(index: index));
-                              },
-                              child: Container(
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      "${snapshot.data.docs[index].data()['imageAddress']}",
-                                  placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                      return Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          
+                          color: Theme.of(context).primaryColor.withOpacity(0.8),
+                          child: Stack(
+                            alignment: Alignment.topRight,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 6),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.to(ArticleData(index: index));
+                                  },
+                                  child: Container(
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          "${snapshot.data.docs[index].data()['imageAddress']}",
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                              InkWell(
+                                onDoubleTap: () {
+                                  firebaseController
+                                      .addFavouriteArticlesTofirebase(
+                                          snapshot: snapshot, index: index);
+                                  Get.snackbar('Article', 'Added');
+                                },
+                                child: Icon(
+                                  Icons.favorite_border_sharp,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                              ),
+                              Positioned(
+                                  left: 20,
+                                  height: 30,
+                                  bottom: 0,
+                                  child: Text(
+                                    "${snapshot.data.docs[index]['title']}",
+                                    style: TextStyle(fontSize: 20),
+                                  )),
+                            ],
                           ),
-                          InkWell(
-                            onDoubleTap: () {
-                              firebaseController.addFavouriteArticlesTofirebase(
-                                  snapshot: snapshot, index: index);
-                              Get.snackbar('Article', 'Added');
-                            },
-                            child: Icon(
-                              Icons.favorite_border_sharp,
-                              size: 40,
-                            ),
-                          ),
-                          Positioned(
-                              left: 20,
-                              height: 40,
-                              bottom: 0,
-                              child: Text(
-                                "${snapshot.data.docs[index]['title']}",
-                                style: TextStyle(fontSize: 20),
-                              )),
-                        ],
+                        ),
                       );
                     },
                   )

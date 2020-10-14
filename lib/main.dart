@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      
+     theme: klightTheme,
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
               ),
               appBar: AppBar(
                   centerTitle: true,
-                  elevation: 0,
+                  
                   title: GetBuilder<Controller>(
                       init: Controller(),
                       builder: (controller) {

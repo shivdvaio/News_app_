@@ -49,7 +49,7 @@ class _AppSettingsState extends State<AppSettings> {
                               children: [
                                 Text(
                                   "Login",
-                                  style: TextStyle(color:Colors.black),
+                                  style:  Theme.of(context).textTheme.bodyText1,
                                 ),
                                 Card(
                                   child: ListTile(
@@ -73,7 +73,7 @@ class _AppSettingsState extends State<AppSettings> {
                             )
                           : Text(
                               "Login",
-                              style: TextStyle(color:Colors.black),
+                              style:  Theme.of(context).textTheme.bodyText1,
                             );
                     }),
                     trailing:
@@ -83,7 +83,7 @@ class _AppSettingsState extends State<AppSettings> {
                               onTap: () {
                                 firebaseController.googleSignOut();
                               },
-                              child: Icon(Icons.logout))
+                              child: Icon(Icons.logout,))
                           : Icon(Icons.arrow_forward_ios);
                     }),
                   ),
@@ -110,7 +110,7 @@ class _AppSettingsState extends State<AppSettings> {
                       tileColor: Theme.of(context).accentColor,
                       leading: Text(
                         "Dark Mode",
-                        style: TextStyle(color:Colors.black),
+                        style: Theme.of(context).textTheme.bodyText1
                       )),
                 ),
               ],
