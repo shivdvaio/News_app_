@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in_all/google_sign_in_all.dart';
-import 'package:news_app/GetxControllers/controllers.dart';
+
 import 'package:news_app/GetxControllers/firebaseController.dart';
-import 'package:news_app/Screens/Explore/explore.dart';
+
 import 'package:news_app/constant.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,7 +32,7 @@ class _AppSettingsState extends State<AppSettings> {
                     tileColor: Theme.of(context).accentColor,
                     onTap: () {
                       Get.bottomSheet(Container(
-                        height: 200,
+                        height: 230,
                         decoration: BoxDecoration(
                             color: Theme.of(context).canvasColor,
                             borderRadius: BorderRadius.only(
@@ -47,12 +46,13 @@ class _AppSettingsState extends State<AppSettings> {
                               children: [
                                 Text(
                                   "Login",
-                                  style:  Theme.of(context).textTheme.bodyText1,
+                                  style:  Theme.of(context).textTheme.bodyText1.copyWith(fontSize:25),
+                                  
                                 ),
                                 Card(
                                   child: ListTile(
                                     leading: Icon(FontAwesomeIcons.google),
-                                    title: Text('Google'),
+                                    title: Text('Google',style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize:17)),
                                     onTap: () {
                                       firebaseController.googleLoginIn();
                                     },
@@ -71,7 +71,7 @@ class _AppSettingsState extends State<AppSettings> {
                             )
                           : Text(
                               "Login",
-                              style:  Theme.of(context).textTheme.bodyText1,
+                              style:  Theme.of(context).textTheme.bodyText1.copyWith(fontSize:18),
                             );
                     }),
                     trailing:
@@ -108,7 +108,7 @@ class _AppSettingsState extends State<AppSettings> {
                       tileColor: Theme.of(context).accentColor,
                       leading: Text(
                         "Dark Mode",
-                        style: Theme.of(context).textTheme.bodyText1
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize:18)
                       )),
                 ),
               ],

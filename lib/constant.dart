@@ -4,10 +4,13 @@ final kdarkTheme = ThemeData.dark().copyWith(
     appBarTheme: AppBarTheme(
       textTheme: TextTheme(
         headline6: TextStyle(color: Colors.white, fontSize: 23),
+      
       ),
     ),
     textTheme: TextTheme(bodyText1: TextStyle(color: Colors.white),
+  
     ),
+    
     primaryColor: Colors.black,
     brightness: Brightness.dark,
     backgroundColor: const Color(0xFF212121),
