@@ -7,10 +7,9 @@ import 'package:news_app/GetxControllers/controllers.dart';
 import 'package:news_app/Screens/Explore/explore.dart';
 import 'package:news_app/Screens/Favouritesarticles/favouritesArticles.dart';
 import 'package:news_app/Screens/HomeScreen/homeScreen.dart';
-
 import 'package:get/get.dart';
-
 import 'package:news_app/Screens/Settings/setting.dart';
+import 'package:news_app/constant.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +34,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: ThemeData.dark(),
+      
       debugShowCheckedModeBanner: false,
       home: SafeArea(
           child: Scaffold(
@@ -52,36 +51,48 @@ class _MyAppState extends State<MyApp> {
                 },
                 items: <BottomNavyBarItem>[
                   BottomNavyBarItem(
-                      inactiveColor: Colors.white,
+                      inactiveColor: Theme.of(context).accentColor,
                       activeColor: Colors.blue,
-                      title: Text("Home"),
+                      title: Text("Home",
+                          style:
+                              TextStyle(color: Theme.of(context).accentColor)),
                       icon: Icon(Icons.home)),
                   BottomNavyBarItem(
-                      inactiveColor: Colors.white,
+                      inactiveColor: Theme.of(context).accentColor,
                       activeColor: Colors.blue,
                       title: Text('Explore'),
                       icon: Icon(
                         Icons.search,
                         size: 25,
+                        color: Theme.of(context).primaryColor,
                       )),
                   BottomNavyBarItem(
-                      inactiveColor: Colors.white,
+                      inactiveColor: Theme.of(context).accentColor,
                       activeColor: Colors.blue,
                       title: Text('Favourites'),
-                      icon: Icon(Icons.save_rounded)),
+                      icon: Icon(
+                        Icons.save_rounded,
+                        color: Theme.of(context).primaryColor,
+                      )),
                   BottomNavyBarItem(
-                      inactiveColor: Colors.white,
+                      inactiveColor: Theme.of(context).accentColor,
                       activeColor: Colors.blue,
                       title: Text('Settings'),
-                      icon: Icon(Icons.settings_outlined)),
+                      icon: Icon(
+                        Icons.settings_outlined,
+                        color: Theme.of(context).accentColor,
+                      )),
                 ],
               ),
               appBar: AppBar(
-                elevation: 0,
+                  centerTitle: true,
+                  elevation: 0,
                   title: GetBuilder<Controller>(
                       init: Controller(),
                       builder: (controller) {
-                        return Text("${controller.appTitle}");
+                        return Text(
+                          "${controller.appTitle}",
+                        );
                       })),
               body: PageView(
                 onPageChanged: (index) {

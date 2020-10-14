@@ -6,7 +6,7 @@ import 'package:news_app/GetxControllers/controllers.dart';
 import 'package:news_app/GetxControllers/firebaseController.dart';
 import 'package:news_app/Screens/ArticleData/articleData.dart';
 import 'package:get/get.dart';
-import 'package:news_app/Screens/Explore/explore.dart';
+
 
 class FavouriteArticles extends StatefulWidget {
   @override

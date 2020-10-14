@@ -6,7 +6,6 @@ class Controller extends GetxController {
   List<int> favouriteItemIndexList = [];
 
   bool favouriteIconcolor = false;
-  
 
   int favouriteItemIndex;
   int selectedIndex = 0;
@@ -30,9 +29,7 @@ class Controller extends GetxController {
     }
   }
 
+  
 
-
-
-
-
+ 
 }
