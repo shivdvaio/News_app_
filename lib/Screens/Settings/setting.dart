@@ -20,9 +20,7 @@ class _AppSettingsState extends State<AppSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [],
-      ),
+      
       body: Column(
         children: [
           Container(
