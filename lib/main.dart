@@ -49,9 +49,7 @@ class _MyAppState extends State<MyApp> {
                   setState(() {
                     selectedIndex = index;
                   });
-                 _pageController.animateToPage(index,
-                      duration: Duration(milliseconds: 1),
-                      curve: Curves.easeInQuad);
+                _pageController.jumpToPage(index);
                     
                 },
               ),
