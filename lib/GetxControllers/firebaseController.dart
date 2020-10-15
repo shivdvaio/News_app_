@@ -1,12 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseController extends GetxController {
-
-  
   addFavouriteArticlesTofirebase(
       {int index, AsyncSnapshot<QuerySnapshot> snapshot}) {
     Map<String, dynamic> mapdata = {
@@ -37,21 +38,47 @@ class FirebaseController extends GetxController {
     });
   }
 
-
   String email = "Login";
-  
+  String displaypicUrl;
+  String displayName;
   bool isLoggedIn = false;
 
   GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
 
-  googleLoginIn() async {
+  googleLoginIn({BuildContext context}) async {
     try {
       await googleSignIn.signIn();
-      isLoggedIn = true;
-      email = googleSignIn.currentUser.email;
-      update();
 
+      if (googleSignIn.currentUser != null) {
+        isLoggedIn = true;
+        update();
+        email = googleSignIn.currentUser.email;
+        update();
+        displaypicUrl = googleSignIn.currentUser.photoUrl;
+        
+        update();
+        displayName = googleSignIn.currentUser.displayName;
+        update();
 
+        Get.bottomSheet(Container(
+            height: 200,
+            decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(10))),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Icon(FontAwesomeIcons.solidCheckCircle,size: 35,),
+                Text(
+                  'Logged In Successfully',
+                  style: TextStyle(fontSize: 20),
+                )
+              ],
+            )));
+      }
     } catch (error) {
       print(error);
     }
@@ -62,15 +89,8 @@ class FirebaseController extends GetxController {
       await googleSignIn.signOut();
       isLoggedIn = false;
       update();
-
     } catch (error) {
       print(error);
     }
   }
-
-
-
-
-
-
 }

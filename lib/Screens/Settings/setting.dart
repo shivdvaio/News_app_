@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:news_app/GetxControllers/firebaseController.dart';
@@ -31,54 +32,73 @@ class _AppSettingsState extends State<AppSettings> {
                     child: ListTile(
                       tileColor: Theme.of(context).accentColor,
                       onTap: () {
-                        Get.bottomSheet(Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).canvasColor,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  topLeft: Radius.circular(10))),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                right: 32.0,
-                                left: 32.0,
-                                top: 16.0,
-                                bottom: 32.0),
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Login",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        .copyWith(fontSize: 25),
-                                  ),
-                                  Card(
-                                    child: ListTile(
-                                      leading: Icon(FontAwesomeIcons.google),
-                                      title: Text('Google',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              .copyWith(fontSize: 17)),
-                                      onTap: () {
-                                        firebaseController.googleLoginIn();
-                                      },
+                        if (firebaseController.isLoggedIn != true) {
+                          Get.bottomSheet(Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).canvasColor,
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10))),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  right: 32.0,
+                                  left: 32.0,
+                                  top: 16.0,
+                                  bottom: 32.0),
+                              child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Login",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(fontSize: 25),
                                     ),
-                                  ),
-                                ]),
-                          ),
-                        ));
+                                    Card(
+                                      child: ListTile(
+                                        leading: Icon(FontAwesomeIcons.google),
+                                        title: Text('Google',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .copyWith(fontSize: 17)),
+                                        onTap: () {
+                                          firebaseController.googleLoginIn(
+                                              context: context);
+                                        },
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                          ));
+                        }
                       },
                       title:
                           GetBuilder<FirebaseController>(builder: (controller) {
                         return firebaseController.isLoggedIn
-                            ? Text(
-                                "${controller.email}",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 17),
+                            ? SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "${controller.displayName}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(fontSize: 18),
+                                    ),
+                                    Text(
+                                      "${controller.email}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
                               )
                             : Text(
                                 "Login",
@@ -87,6 +107,14 @@ class _AppSettingsState extends State<AppSettings> {
                                     .bodyText1
                                     .copyWith(fontSize: 18),
                               );
+                      }),
+                      leading:
+                          GetBuilder<FirebaseController>(builder: (controller) {
+                        return firebaseController.isLoggedIn == true
+                            ? CircleAvatar(
+                                backgroundImage: CachedNetworkImageProvider(
+                                    '${controller.displaypicUrl}'))
+                            : Icon(Icons.login_sharp);
                       }),
                       trailing:
                           GetBuilder<FirebaseController>(builder: (controller) {
@@ -107,8 +135,12 @@ class _AppSettingsState extends State<AppSettings> {
                   padding: EdgeInsets.only(
                       right: 10.0, left: 10.0, top: 12.0, bottom: 25.0),
                   child: Card(
-              
                     child: ListTile(
+                        title: Text("Dark Mode",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .copyWith(fontSize: 18)),
                         trailing: Switch(
                           activeTrackColor: Colors.white,
                           activeColor: Colors.blueAccent,
@@ -125,11 +157,7 @@ class _AppSettingsState extends State<AppSettings> {
                           },
                         ),
                         tileColor: Theme.of(context).accentColor,
-                        leading: Text("Dark Mode",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                .copyWith(fontSize: 18))),
+                        leading: Icon(Icons.nights_stay)),
                   ),
                 ),
               ],
