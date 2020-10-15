@@ -38,7 +38,7 @@ class FirebaseController extends GetxController {
   }
 
 
-  String email;
+  String email = "Login";
   
   bool isLoggedIn = false;
 

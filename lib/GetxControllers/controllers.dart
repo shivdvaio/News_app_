@@ -21,7 +21,7 @@ class Controller extends GetxController {
       appTitle = "Explore";
       update();
     } else if (index == 2) {
-      appTitle = "Saved";
+      appTitle = "Favourite";
       update();
     } else if (index == 3) {
       appTitle = "Settings";
