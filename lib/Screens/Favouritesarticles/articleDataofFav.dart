@@ -63,7 +63,7 @@ class _ArticleDataofFavState extends State<ArticleDataofFav> {
             ),
             StreamBuilder(
                 stream: FirebaseFirestore.instance
-                    .collection('articleData')
+                    .collection('savedArticles')
                     .snapshots(),
                 builder: (BuildContext context, snapshot) {
                   if (!snapshot.hasData) {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:news_app/GetxControllers/controllers.dart';
 import 'package:news_app/GetxControllers/firebaseController.dart';
-import 'package:news_app/Screens/ArticleData/articleData.dart';
+
 import 'package:get/get.dart';
 import 'package:news_app/Screens/Favouritesarticles/articleDataofFav.dart';
 
