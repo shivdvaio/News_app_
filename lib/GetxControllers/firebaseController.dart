@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -47,7 +48,17 @@ class FirebaseController extends GetxController {
 
   googleLoginIn({BuildContext context}) async {
     try {
-      await googleSignIn.signIn();
+      final GoogleSignInAccount googleSignInAccount =
+          await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      FirebaseAuth.instance.signInWithCredential(credential);
 
       if (googleSignIn.currentUser != null) {
         isLoggedIn = true;
@@ -55,7 +66,7 @@ class FirebaseController extends GetxController {
         email = googleSignIn.currentUser.email;
         update();
         displaypicUrl = googleSignIn.currentUser.photoUrl;
-        
+
         update();
         displayName = googleSignIn.currentUser.displayName;
         update();
@@ -71,7 +82,10 @@ class FirebaseController extends GetxController {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Icon(FontAwesomeIcons.solidCheckCircle,size: 35,),
+                Icon(
+                  FontAwesomeIcons.solidCheckCircle,
+                  size: 35,
+                ),
                 Text(
                   'Logged In Successfully',
                   style: TextStyle(fontSize: 20),
