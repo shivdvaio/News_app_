@@ -46,6 +46,8 @@ class FirebaseController extends GetxController {
 
   GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
 
+
+
   googleLoginIn({BuildContext context}) async {
     try {
       final GoogleSignInAccount googleSignInAccount =

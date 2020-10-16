@@ -6,6 +6,7 @@ import 'package:news_app/GetxControllers/controllers.dart';
 import 'package:news_app/GetxControllers/firebaseController.dart';
 import 'package:news_app/Screens/ArticleData/articleData.dart';
 import 'package:get/get.dart';
+import 'package:news_app/Screens/Favouritesarticles/articleDataofFav.dart';
 
 
 class FavouriteArticles extends StatefulWidget {
@@ -45,7 +46,7 @@ class _FavouriteArticlesState extends State<FavouriteArticles> {
                         padding: EdgeInsets.only(top: 6),
                         child: GestureDetector(
                           onTap: () {
-                            Get.to(ArticleData(index: index));
+                            Get.to(ArticleDataofFav(index: index));
                           },
                           child: Container(
                             child: CachedNetworkImage(
