@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/Database/databasehelper.dart';
 import 'package:news_app/GetxControllers/controllers.dart';
 import 'package:news_app/GetxControllers/firebaseController.dart';
 import 'package:news_app/Screens/ArticleData/articleData.dart';
@@ -50,7 +51,8 @@ class _ExploreState extends State<Explore> {
                             Padding(
                               padding: EdgeInsets.only(top: 6),
                               child: GestureDetector(
-                                onTap: () {
+                                onTap: ()  async {
+                                
                                   Get.to(ArticleData(index: index));
                                 },
                                 child: Container(
@@ -70,6 +72,7 @@ class _ExploreState extends State<Explore> {
                                  firebaseController.addFavouriteArticlesTofirebase(
                                       snapshot: snapshot, index: index);
                                   Get.snackbar('Article', 'Added');
+
                               },
                               child: Icon(
                                 Icons.favorite_border_sharp,

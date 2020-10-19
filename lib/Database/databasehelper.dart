@@ -10,6 +10,9 @@ class DatabaseHelper {
   static final _tableName = "myTable";
   static final columnId = '_id';
   static final columnName = 'name';
+  static final imageAddress = "imageAdd";
+  static final title  = "titleArticle";
+  static final htmlData = "dataHtml";
 
   DatabaseHelper._privateconstructor();
 
@@ -36,8 +39,11 @@ class DatabaseHelper {
         CREATE TABLE $_tableName (
           
         $columnId INTEGER PRIMARY KEY,
-        $columnName TEXT NOT NULL)
-        
+        $imageAddress STRING,
+        $title STRING,
+        $htmlData  STRING,
+        $columnName STRING)
+           
        ''');
   }
 

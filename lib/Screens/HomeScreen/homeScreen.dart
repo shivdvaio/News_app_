@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:news_app/Database/databasehelper.dart';
 import 'package:news_app/GetxControllers/controllers.dart';
 import 'package:news_app/GetxControllers/firebaseController.dart';
 import 'package:news_app/Screens/ArticleData/articleData.dart';
@@ -26,6 +27,20 @@ class HomeScreen extends StatelessWidget {
     print("Product Information Added");
   }
 
+  void insertDatatoSql(AsyncSnapshot snapshot, int index) async {
+    int id = await DatabaseHelper.instance.insert({
+     
+      DatabaseHelper.columnName:"shivdata",
+      DatabaseHelper.title: snapshot.data.docs[index].data()['title'],
+      DatabaseHelper.htmlData: snapshot.data.docs[index]['htmlData'],
+      DatabaseHelper.imageAddress:
+          snapshot.data.docs[index].data()['imageAddress']
+          
+    });
+     print(id);
+ 
+  }
+
   bool btnCOLOR = true;
   @override
   Widget build(BuildContext context) {
@@ -40,25 +55,32 @@ class HomeScreen extends StatelessWidget {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisSpacing: 20, crossAxisCount: 2),
                     itemBuilder: (BuildContext context, index) {
-                      if (snapshot.data.docs[index].data()['title'] == null) {
+                      if (snapshot.data.docs[index].data()['title'] == null)  {
                         return CircularProgressIndicator(
                           strokeWidth: 2,
                         );
                       }
-
+                      
+                  
+                      insertDatatoSql(snapshot, index);
+                      
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Container(
-                          
-                          color: Theme.of(context).primaryColor.withOpacity(0.8),
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.8),
                           child: Stack(
                             alignment: Alignment.topRight,
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(top: 6),
                                 child: GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+             
+                              
+                                print("press");
                                     Get.to(ArticleData(index: index));
+                                
                                   },
                                   child: Container(
                                     child: CachedNetworkImage(

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:news_app/Database/databasehelper.dart';
 import 'package:news_app/GetxControllers/controllers.dart';
 import 'package:news_app/Screens/Explore/explore.dart';
 import 'package:news_app/Screens/Favouritesarticles/favouritesArticles.dart';
@@ -65,10 +66,12 @@ class _MyAppState extends State<MyApp> {
                         );
                       })),
               body: PageView(
-                onPageChanged: (index) {
+                onPageChanged: (index) async {
                   setState(() {
                     selectedIndex = index;
                   });
+                 List<Map<String,dynamic>> data =  await DatabaseHelper.instance.queryAll();
+                 print(data);
                   controller.changeTitle(index: index);
                 },
                 controller: _pageController,
